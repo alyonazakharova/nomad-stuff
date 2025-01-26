@@ -6,25 +6,36 @@ struct SettingsView: View {
     @State private var citizenshipCountry: Country?
     
     var body: some View {
-        Form {
-            Section("Citizenship") {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Citizenship")
+                .font(.footnote)
+                .foregroundColor(.secondary)
+                .textCase(.uppercase)
+                .padding(.horizontal, 16)
+                .padding(.top, 20)
+                .padding(.bottom, 8)
+            
+            VStack(spacing: 0) {
                 HStack {
                     Text("Country")
                     Spacer()
                     Text(citizenshipCountry?.name ?? "Not selected")
                         .foregroundColor(.gray)
+                    Text(citizenshipCountry?.flag ?? "")
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    showingCitizenshipSelection = true
-                }
+                .padding()
+                .background(Color(.systemBackground))
+                .cornerRadius(10)
+                .padding(.horizontal)
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                showingCitizenshipSelection = true
+            }
+            
+            Spacer()
         }
-//        .scrollContentBackground(.hidden)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            showingCitizenshipSelection = true
-        }
+        .background(Color(.systemGroupedBackground))
         .sheet(isPresented: $showingCitizenshipSelection) {
             CitizenshipSelectionView(isPresented: $showingCitizenshipSelection)
         }
