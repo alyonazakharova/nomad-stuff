@@ -12,6 +12,7 @@ struct ContentView: View {
         MainTabView()
             .sheet(isPresented: $isFirstLaunch) {
                 CitizenshipSelectionView(isPresented: $isFirstLaunch)
+                    .interactiveDismissDisabled(true)
             }
     }
 }
