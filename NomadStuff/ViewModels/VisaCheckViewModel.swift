@@ -1,16 +1,17 @@
 import Foundation
 
-class CountryListViewModel: ObservableObject {
+class VisaCheckViewModel: ObservableObject {
     @Published var countries = CountriesList.all
     @Published var errorMessage: String?
     @Published var showingError = false
     @Published var visaResponse: ApiResponse?
     
-    func selectCountry(_ country: Country, citizenshipCountry: String) {
+    func selectCountry(_ country: Country) {
         self.visaResponse = nil
         
-        let urlString = "https://rough-sun-2523.fly.dev/visa/TR/\(country.code)"
-//        let urlString = "https://rough-sun-2523.fly.dev/visa/\(citizenshipCountry)/\(country.code)/"
+        let citizenshipCountryCode = CountryManager.shared.loadSavedCountry()!.code
+        print("Making request for \(citizenshipCountryCode) and \(country.code)")
+        let urlString = "https://rough-sun-2523.fly.dev/visa/\(citizenshipCountryCode)/\(country.code)"
         print("Attempting to fetch from URL:", urlString)
         
         guard let url = URL(string: urlString) else {

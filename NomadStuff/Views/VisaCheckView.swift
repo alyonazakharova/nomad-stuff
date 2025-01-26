@@ -1,8 +1,7 @@
 import SwiftUI
 
-struct CountryListView: View {
-    @StateObject private var viewModel = CountryListViewModel()
-    @AppStorage("citizenshipCountry") private var citizenshipCountry: String = ""
+struct VisaCheckView: View {
+    @StateObject private var viewModel = VisaCheckViewModel()
     @State private var showingResultView = false
     
     var body: some View {
@@ -10,7 +9,7 @@ struct CountryListView: View {
             countries: viewModel.countries,
             onCountrySelected: { country in
                 showingResultView = true
-                viewModel.selectCountry(country, citizenshipCountry: citizenshipCountry)
+                viewModel.selectCountry(country)
             }
         )
         .sheet(isPresented: $showingResultView) {

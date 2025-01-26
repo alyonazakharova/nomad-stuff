@@ -1,29 +1,9 @@
-//import SwiftUI
-//
-//struct SettingsView: View {
-//    @Environment(\.dismiss) private var dismiss
-//    @AppStorage("citizenshipCountry") private var citizenshipCountry: String = ""
-//    
-//    var body: some View {
-//        VStack {
-//            Text("To be done yet")
-//                .font(.title)
-//                .bold(true)
-//                .padding()
-//            Text("Selected citizenship: \(citizenshipCountry)")
-//                .padding()
-//            
-//        }
-//    }
-//}
-
-
 import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("citizenshipCountry") private var citizenshipCountry: String = ""
     @State private var showingCitizenshipSelection = false
+    @State private var citizenshipCountry: Country?
     
     var body: some View {
         NavigationStack {
@@ -32,7 +12,7 @@ struct SettingsView: View {
                     HStack {
                         Text("Country")
                         Spacer()
-                        Text(citizenshipCountry.isEmpty ? "Not selected" : citizenshipCountry)
+                        Text(citizenshipCountry?.name ?? "Not selected")
                             .foregroundColor(.gray)
                     }
                     .contentShape(Rectangle())
@@ -40,12 +20,18 @@ struct SettingsView: View {
                         showingCitizenshipSelection = true
                     }
                 }
-                
-                // Add other settings sections here
             }
             .navigationTitle("Settings")
             .sheet(isPresented: $showingCitizenshipSelection) {
                 CitizenshipSelectionView(isPresented: $showingCitizenshipSelection)
+            }
+            .onAppear {
+                citizenshipCountry = CountryManager.shared.loadSavedCountry()
+            }
+            .onChange(of: showingCitizenshipSelection) { oldValue, newValue in
+                if !newValue {
+                    citizenshipCountry = CountryManager.shared.loadSavedCountry()
+                }
             }
         }
     }

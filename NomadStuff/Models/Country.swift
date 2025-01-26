@@ -1,6 +1,6 @@
 import Foundation
 
-struct Country: Identifiable, Hashable {
+struct Country: Identifiable, Hashable, Codable {
     let id = UUID()
     let name: String
     let flag: String

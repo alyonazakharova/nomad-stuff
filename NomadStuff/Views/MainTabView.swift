@@ -4,7 +4,7 @@ struct MainTabView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                CountryListView()
+                VisaCheckView()
                     .navigationTitle("Visa Check")
             }
             .tabItem {
