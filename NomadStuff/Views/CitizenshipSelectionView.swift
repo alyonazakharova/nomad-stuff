@@ -6,12 +6,13 @@ struct CitizenshipSelectionView: View {
     
     var body: some View {
         NavigationStack {
-            List(CountriesList.all) { country in
-                CountryRowView(country: country) {
+            CountrySearchListView(
+                countries: CountriesList.all,
+                onCountrySelected: { country in
                     citizenshipCountry = country.name
                     isPresented = false
                 }
-            }
+            )
             .navigationTitle("Select Citizenship")
             .navigationBarBackButtonHidden(true)
         }
